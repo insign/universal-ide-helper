@@ -1,25 +1,29 @@
 {
-  "name"       : "universal-ide-helper",
-  "version"    : "0.0.1",
+  "name": "universal-ide-helper",
+  "version": "0.0.1",
   "description": "Aims to help programmers to speed up coding by adding many code completations",
-  "main"       : "index.js",
-  "repository" : "git@github.com:insign/universal-ide-helper.git",
-  "bugs"       : "https://github.com/insign/universal-ide-helper/issues",
-  "author"     : "Hélio <insign@gmail.com> (https://helio.me)",
-  "license"    : {
+  "main": "index.js",
+  "repository": "git@github.com:insign/universal-ide-helper.git",
+  "bugs": "https://github.com/insign/universal-ide-helper/issues",
+  "author": "Hélio <insign@gmail.com> (https://helio.me)",
+  "license": {
     "type": "WTFPL",
-    "url" : "http://www.wtfpl.net/about"
+    "url": "https://spdx.org/licenses/WTFPL.html"
   },
-  "private"    : false,
-  "keywords"   : [
+  "private": false,
+  "keywords": [
     "ide",
     "ide-helper",
     "code completation"
   ],
-  "bin"        : {
+  "bin": {
     "ide": "bin/ide.js"
   },
-  "engines"    : {
+  "engines": {
     "node": ">=8"
+  },
+  "dependencies": {
+    "commander": "^2.19.0",
+    "ora": "^3.2.0"
   }
 }

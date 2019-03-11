@@ -135,7 +135,7 @@ out/
 .idea_modules/
 
 # JIRA plugin
-atlassian-ide-plugin.xml
+atlassian-ide.js-plugin.xml
 
 # Cursive Clojure plugin
 .idea/replstate.xml
