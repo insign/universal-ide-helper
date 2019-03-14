@@ -10,7 +10,14 @@ module.exports = () => {
       .command('install')
       .description('download and install all available ide helpers sets')
       .action(function () {
-        require('./commands/install')
+        require('./built/install')
+      })
+  
+  program
+      .command('helpers')
+      .description('list helper sets available')
+      .action(function () {
+        require('./built/helpers')
       })
 
   program.parse(process.argv)
