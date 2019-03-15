@@ -1,24 +1,18 @@
-const program   = require('commander')
-const {version} = require('./package.json')
+import program from 'commander'
+import helpers from './commands/helpers'
+import install from './commands/install'
 
-module.exports = () => {
-  program
-      .version(version, '-v, --version')
+program
+    .version(require('./package.json').version, '-v, --version')
 
+program
+    .command('install')
+    .description('download and install all available ide helpers sets')
+    .action(install)
 
-  program
-      .command('install')
-      .description('download and install all available ide helpers sets')
-      .action(function () {
-        require('./built/install')
-      })
-  
-  program
-      .command('helpers')
-      .description('list helper sets available')
-      .action(function () {
-        require('./built/helpers')
-      })
+program
+    .command('helpers')
+    .description('list helper sets available')
+    .action(helpers)
 
-  program.parse(process.argv)
-}
+program.parse(process.argv)

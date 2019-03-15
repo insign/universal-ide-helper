@@ -1,12 +1,8 @@
-const helpers = [
-  {
-    slug:     'mdi',
-    title:    'Material Design Icons',
-    file:     'mdi.js',
-    category: 'icons',
-  },
-]
+import { helpers } from '../helpers/helpers'
 
-console.table(helpers)
+export default () => {
+  console.table(helpers)
 
-process.exit(0)
+  process.exit(0)
+}
+
