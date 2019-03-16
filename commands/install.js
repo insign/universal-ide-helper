@@ -1,21 +1,38 @@
-const ora = require('ora')
+import ora from 'ora'
 
-import { map } from 'lodash'
-
+import { helpers } from '../helpers/all'
 
 export default () => {
-  const spinner = ora('Downloading available helpers sets').start()
-  // spinner.succeed('10 helpers sets found.')
-  // ora('Downloading available helpers sets').start()
 
-  const Octokit = require('@octokit/rest')
-  const octokit = new Octokit()
+  let spinner    = ora()
+  spinner.indent = 2
+  helpers.forEach(helper => {
 
-  let mdi = {owner: 'Templarian', repo: 'MaterialDesign', path: 'icons/svg', ref: 'master'}
+    spinner.start(`Preparing ${ helper.title }`)
 
-  octokit.repos.getContents(mdi).then(result => {
-    spinner.stop()
-    console.info(map(result.data, 'name'))
-    // spinner.succeed('10 helpers sets found.')
+    let hs = import('../helpers/' + helper.slug)
+
+    hs
+        .then((module) => {
+          module.prepare()
+                .then(bundle => {
+                  spinner.color = 'yellow'
+                  spinner.text  = `Installing ${ helper.title }`
+
+                  module.install(bundle)
+                        .then((installed) => {
+                          spinner.succeed(`Installed ${ helper.title }`)
+                        })
+                        .catch((err) => {
+                          console.error(err)
+                          spinner.fail(`Fail to install ${ helper.title }`)
+                        })
+                })
+                .catch((err) => { console.error(err) })
+        })
+        .catch((err) => { console.error(err) })
+
+
   })
+
 }

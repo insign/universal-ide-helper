@@ -11,6 +11,7 @@
     "url": "https://spdx.org/licenses/WTFPL.html"
   },
   "private": false,
+  "preferGlobal": true,
   "keywords": [
     "ide",
     "ide-helper",
@@ -20,9 +21,7 @@
     "ide": "bin/ide.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel --presets es2015 -d built/ commands -d built/ helpers",
-    "dev": "yarn build && ide"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
     "node": ">=8"
@@ -32,11 +31,8 @@
     "collect.js": "^4.6.4",
     "commander": "^2.19.0",
     "esm": "^3.2.18",
+    "glob": "^7.1.3",
     "lodash": "^4.17.11",
     "ora": "^3.2.0"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1"
   }
 }
