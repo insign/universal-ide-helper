@@ -4,46 +4,50 @@ import { jetbrainsConfigFolder } from '../commons'
 
 const fs = require('fs')
 
-const props = {
-  slug:     'mdi',
-  title:    'Material Design Icons',
-  file:     'mdi.js',
-  category: 'icons',
-}
-
-
 let prepare, install, templates = [], built = {}
 
 templates = [
   {
     ide:      'jetbrains',
     template: '<template name="${target}" value="${target}" shortcut="ENTER" description="${target}" toReformat="true" toShortenFQNames="true">\n' +
-                  '    <context>\n' +
-                  '      <option name="VUE_INSIDE_TAG" value="true" />\n' +
-                  '    </context>\n' +
+                  ' <context>\n' +
+                  '      <option name="HTML" value="true" />\n' +
+                  '      <option name="HTML_TEXT" value="false" />\n' +
+                  '      <option name="VUE_COMPONENT_DESCRIPTOR" value="false" />\n' +
+                  '      <option name="VUE_SCRIPT" value="false" />\n' +
+                  '      <option name="VUE_TEMPLATE" value="false" />\n' +
+                  '      <option name="VUE_TOP_LEVEL" value="false" />\n' +
+                  '      <option name="Vue" value="true" />\n' +
+                  ' </context>' +
                   '</template>\n',
   },
 ]
 
 built.jetbrains = []
 
-prepare = async () => {
+prepare = async (props) => {
+  let bundle, tree_sha, files
   const octokit = new Octokit()
 
-  let mdi = {owner: 'Templarian', repo: 'MaterialDesign', path: 'icons/svg', ref: 'master'}
+  let mdi = {owner: 'Templarian', repo: 'MaterialDesign', path: 'icons', ref: 'master'}
 
-  return octokit.repos.getContents(mdi)
-                .then(result => {
-                  let bundle = map(result.data, 'name')
+  tree_sha = await octokit.repos.getContents(mdi)
+  tree_sha = tree_sha.data.find(x => x.name == 'svg')
 
-                  bundle = bundle.map(x => 'mdi-' + x.split('.').slice(0, -1).join('.'))
+  mdi.tree_sha = tree_sha.sha
 
-                  return {list: bundle}
-                })
+  files = await octokit.git.getTree(mdi)
+  files = files.data.tree
+
+
+  bundle = map(files, 'path')
+  bundle = bundle.map(x => 'mdi-' + x.split('.').slice(0, -1).join('.'))
+
+  return {list: bundle}
 }
 
 
-install = async (bundle) => {
+install = async (bundle, props) => {
   // Applies the template
   bundle.list.forEach((target) => {
     templates.forEach((it) => {

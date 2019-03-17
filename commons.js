@@ -2,7 +2,7 @@ const os   = require('os')
 const glob = require('glob')
 
 const homedir     = os.homedir()
-const globApps    = '.+(PhpStorm|WebStorm|IntelliJ|PyCharm|Rider|GoLand)*'
+const globApps    = '.+(PhpStorm|WebStorm|IntelliJ|PyCharm|Rider|GoLand|ReSharper|CLion|RubyMine|AppCode)*'
 const globOptions = {
   dot:    true,
   nocase: true,

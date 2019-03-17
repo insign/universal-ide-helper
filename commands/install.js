@@ -14,12 +14,12 @@ export default () => {
 
     hs
         .then((module) => {
-          module.prepare()
+          module.prepare(helper)
                 .then(bundle => {
                   spinner.color = 'yellow'
                   spinner.text  = `Installing ${ helper.title }`
 
-                  module.install(bundle)
+                  module.install(bundle, helper)
                         .then((installed) => {
                           spinner.succeed(`Installed ${ helper.title }`)
                         })
