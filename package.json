@@ -1,7 +1,7 @@
 {
   "name": "universal-ide-helper",
   "version": "0.0.1",
-  "description": "Aims to help programmers to speed up coding by adding many code completations",
+  "description": "Boost code completation with shortcurts from many framework/tools",
   "main": "index.js",
   "repository": "git@github.com:insign/universal-ide-helper.git",
   "bugs": "https://github.com/insign/universal-ide-helper/issues",

@@ -1,17 +1,18 @@
 import program from 'commander'
-import helpers from './commands/helpers'
-import install from './commands/install'
 import dotenv  from 'dotenv'
 import Octokit from '@octokit/rest'
 import chalk   from 'chalk'
 import ora     from 'ora'
-
+import helpers from './commands/helpers'
+import install from './commands/install'
 
 dotenv.config()
 
-global.octokit = new Octokit({auth: 'token ' + process.env.GH_TOKEN})
-global.chalk   = chalk
-global.ora     = ora
+const gh_token = process.env.GH_TOKEN || null
+global.octokit = new Octokit(gh_token ? {auth: 'token ' + process.env.GH_TOKEN} : null)
+
+global.chalk = chalk
+global.ora   = ora
 
 
 program
