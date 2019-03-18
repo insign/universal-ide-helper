@@ -5,6 +5,8 @@ Boost code completation with shortcurts from many framework/tools
 
 > Works with [Quasar Framework](http://quasar-framework.org) too :)
 
+![](demo.gif)
+
 ## Helpers set available
 
 - [Material Design Icons](https://fontawesome.com)
