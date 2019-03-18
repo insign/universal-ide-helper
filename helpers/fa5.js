@@ -35,7 +35,6 @@ prepare = async (props) => {
 
   decoded = Buffer.from(content.data.content, 'base64').toString()
 
-  // tree_sha = tree_sha.data.find(x => x.name == 'svg')
   regex  = /\.fa-[^\s:{]+/mg
   bundle = decoded.match(regex)
   bundle = bundle.map(c => c.substr(1)) // remove . at the beginning
