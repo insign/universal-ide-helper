@@ -1,38 +1,32 @@
-import ora from 'ora'
-
 import { helpers } from '../helpers/all'
 
 export default () => {
+  // spinner = ora({indent: 2, color: 'yellow'}).start(`Iniciando`)
 
-  let spinner    = ora()
-  spinner.indent = 2
   helpers.forEach(helper => {
+    let spinner = ora({indent: 2}).start(`Installing ${ helper.title }`)
+    let hs      = import('../helpers/' + helper.slug)
 
-    spinner.start(`Preparing ${ helper.title }`)
-
-    let hs = import('../helpers/' + helper.slug)
 
     hs
-        .then((module) => {
-          module.prepare(helper)
-                .then(bundle => {
-                  spinner.color = 'yellow'
-                  spinner.text  = `Installing ${ helper.title }`
-
-                  module.install(bundle, helper)
-                        .then((installed) => {
-                          spinner.succeed(`Installed ${ helper.title }`)
-                        })
-                        .catch((err) => {
-                          console.error(err)
-                          spinner.fail(`Fail to install ${ helper.title }`)
-                        })
-                })
-                .catch((err) => { console.error(err) })
+        .then(async (module) => {
+          await module.prepare(helper)
+                      .then(async bundle => {
+                        await module.install(bundle, helper)
+                                    .then(() => {
+                                      spinner.succeed(`Installed ` + chalk.bold(helper.title))
+                                    })
+                                    .catch((err) => {
+                                      spinner.fail(`Fail to install ${ helper.title } - ${ err }`)
+                                      spinner.stop()
+                                    })
+                      })
+                      .catch((err) => { console.error(err) })
         })
         .catch((err) => { console.error(err) })
-
-
+        .finally(() => {
+          // spinner.stop()
+        })
   })
 
 }

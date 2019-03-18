@@ -1,4 +1,5 @@
-import { map, template as t }    from 'lodash'
+import { template as t }    from 'lodash'
+
 import { jetbrainsConfigFolder } from '../commons'
 
 const fs = require('fs')
@@ -25,21 +26,19 @@ templates = [
 built.jetbrains = []
 
 prepare = async (props) => {
-  let bundle, tree_sha, files
+  let decoded, bundle, content, regex
 
-  let mdi = {owner: 'Templarian', repo: 'MaterialDesign', path: 'icons', ref: 'master'}
+  let mdi = {owner: 'FortAwesome', repo: 'Font-Awesome', path: 'css/all.css', ref: 'master'}
 
-  tree_sha = await octokit.repos.getContents(mdi)
-  tree_sha = tree_sha.data.find(x => x.name == 'svg')
-
-  mdi.tree_sha = tree_sha.sha
-
-  files = await octokit.git.getTree(mdi)
-  files = files.data.tree
+  content = await octokit.repos.getContents(mdi)
 
 
-  bundle = map(files, 'path')
-  bundle = bundle.map(x => 'mdi-' + x.split('.').slice(0, -1).join('.'))
+  decoded = Buffer.from(content.data.content, 'base64').toString()
+
+  // tree_sha = tree_sha.data.find(x => x.name == 'svg')
+  regex  = /\.fa-[^\s:{]+/mg
+  bundle = decoded.match(regex)
+  bundle = bundle.map(c => c.substr(1)) // remove . at the beginning
 
   return {list: bundle}
 }
