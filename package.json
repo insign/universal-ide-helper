@@ -1,6 +1,6 @@
 {
   "name": "universal-ide-helper",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Boost code completation with shortcurts from many framework/tools",
   "main": "index.js",
   "repository": "github:insign/universal-ide-helper.git",
