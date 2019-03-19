@@ -3,7 +3,7 @@
   "version": "0.0.4",
   "description": "Boost code completation with shortcurts from many framework/tools",
   "main": "index.js",
-  "repository": "git@github.com:insign/universal-ide-helper.git",
+  "repository": "github:insign/universal-ide-helper.git",
   "bugs": "https://github.com/insign/universal-ide-helper/issues",
   "author": "Hélio <insign@gmail.com> (https://helio.me)",
   "license": {
