@@ -25,8 +25,6 @@ export default () => {
         })
         .catch((err) => { console.error(err) })
         .finally(() => {
-          // spinner.stop()
         })
   })
-
 }

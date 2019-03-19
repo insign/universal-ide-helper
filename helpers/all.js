@@ -11,6 +11,18 @@ const helpers = [
     file:     'fa5.js',
     category: 'icons',
   },
+  {
+    slug:     'ion',
+    title:    'Ionicons',
+    file:     'ion.js',
+    category: 'icons',
+  },
+  {
+    slug:     'eva',
+    title:    'Eva Icons',
+    file:     'eva.js',
+    category: 'icons',
+  },
 ]
 
 export { helpers }

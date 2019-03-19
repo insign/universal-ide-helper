@@ -11,7 +11,9 @@ Boost code completation with shortcurts from many framework/tools
 
 - [Material Design Icons](https://fontawesome.com)
 - [Font Awesome Icons 5](https://materialdesignicons.com)
-- Much more come soon
+- [Ionicons](https://ionicons.com/)
+- [Eva Icons](https://akveo.github.io/eva-icons/)
+- Much more come soon (not only icons)
 
 
 ## Install
@@ -44,6 +46,9 @@ $ ide -h
       install        download and install all available ide helpers sets
       helpers        list helper sets available
 ```
+
+## How it works
+The script downloads the data from github, organize, then export to a xml in the folder of your installed JetBrains IDE (the script tries to detect the folder). 
 
 ## License
 

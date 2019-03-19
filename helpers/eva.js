@@ -1,6 +1,5 @@
-import { template as t, uniq } from 'lodash'
-
-import { jetbrainsConfigFolder } from '../commons'
+import { map, template as t, union } from 'lodash'
+import { jetbrainsConfigFolder }     from '../commons'
 
 const fs = require('fs')
 
@@ -26,23 +25,27 @@ templates = [
 built.jetbrains = []
 
 prepare = async (props) => {
-  let decoded, bundle, content, regex
+  let bundle = [], tree_sha, files
 
-  let mdi = {owner: 'FortAwesome', repo: 'Font-Awesome', path: 'css/all.css', ref: 'master'}
+  let repo = {owner: 'akveo', repo: 'eva-icons', path: 'package/icons/fill', ref: 'master'}
 
-  content = await octokit.repos.getContents(mdi)
+  tree_sha = await octokit.repos.getContents(repo)
+  tree_sha = tree_sha.data.find(x => x.name == 'svg')
 
+  repo.tree_sha = tree_sha.sha
 
-  decoded = Buffer.from(content.data.content, 'base64').toString()
+  files = await octokit.git.getTree(repo)
+  files = files.data.tree
+  files = map(files, 'path')
 
-  regex  = /\.fa-[^\s:{]+/mg
-  bundle = decoded.match(regex)
-  bundle = bundle.map(c => c.substr(1)) // remove . at the beginning
-  bundle = uniq(bundle) // remove duplicates
+  bundle            = files.map(x => 'eva-' + x.split('.').slice(0, -1).join('.'))
+  let style_fill    = bundle.map(x => x + '-fill')
+  let style_outline = bundle.map(x => x + '-outline')
+
+  bundle = union(style_fill, style_outline)
 
   return {list: bundle}
 }
-
 
 install = async (bundle, props) => {
   // Applies the template
